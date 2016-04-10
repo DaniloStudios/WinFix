@@ -1,0 +1,131 @@
+@echo off
+title WinFix 1.1 - Danilo Studios
+
+rem #include
+rem /*
+rem * Ao utilizar este programa, voce concorda com os termos abaixo (English).
+rem *
+rem * I am not responsible for bricked devices, dead SD cards,
+rem * thermonuclear war, or you getting fired because the alarms+clock app failed. Please
+rem * do some research if you have any concerns about features included in this program
+rem * before use it! YOU are choosing to make these modifications, and if
+rem * you point the finger at me for messing up your device, I will laugh at you.
+rem * Copyright 2016,Danilo Studios
+rem * 2016, Danilo Quintanilha, All Rights Reserved
+rem * Agradecimentos especiais: 
+rem *  -->TechNet [https://technet.microsoft.com/en-us/library/hh824869.aspx]
+rem *  -->Babbo [http://forum.baboo.com.br/index.php?/topic/137759-comandos-do-cmd-prompt-de-comando/]
+
+color 0A
+goto admin
+
+:pergunta
+set /p admin=(s/n): 
+if %admin%==s (goto menu)
+if %admin%==S (goto menu)
+if %admin%==n (goto exit)
+if %admin%==N (goto exit)
+
+
+:admin
+echo Note que varias opcoes so funcionam se voce executar o programa como Administrador.
+echo 
+echo O programa se encontra com privilegios de Administrador?
+goto pergunta
+
+:menu
+cls
+color 3F
+echo 1: Checar a integridade do HD
+echo 2: Checar a integridade da instalacao do Windows (Metodo 1 - Lento)
+echo 3: Checar a integridade da instalacao do Windows (Metodo 2 - Rapido)
+echo 4: Reparar a integridade do sistema (Conexao com a internet requerida)
+echo 5: Desfragmentador de Disco
+echo 6: Diagnosticar a memoria RAM
+echo 7: Limpeza de disco
+echo 8: Particionador de disco
+echo 9: Fixar o leitor de DVD
+echo 10: Instalar o .NET 3.5
+echo x: Sair
+
+set /p se=Selecione a acao: 
+if %se%==1 (goto hd1)
+if %se%==2 (goto checa1)
+if %se%==3 (goto checa2)
+if %se%==4 (goto repara)
+if %se%==5 (goto hd2)
+if %se%==6 (goto ram1)
+if %se%==7 (goto limpa)
+if %se%==8 (goto part)
+if %se%==9 (goto dvd)
+if %se%==10 (goto net)
+if %se%==x (goto sai)
+
+:hd1
+cls
+chkdsk
+pause
+goto menu
+
+:checa1
+Dism /Online /Cleanup-Image /ScanHealth
+pause
+goto menu
+
+:checa2
+Dism /Online /Cleanup-Image /CheckHealth
+pause
+goto menu
+
+:repara
+Dism /Online /Cleanup-Image /RestoreHealth
+pause
+goto menu
+
+:hd2
+cls
+echo Iniciando aplicativo externo...
+%windir%\system32\dfrgui.exe
+goto menu
+
+:ram1
+cls
+echo Iniciando aplicativo externo...
+%windir%\system32\MdSched.exe
+goto menu
+
+:limpa
+cls
+echo Iniciando aplicativo externo...
+%windir%\system32\cleanmgr.exe
+goto menu
+
+:part
+cls
+diskpart
+goto menu
+
+:dvd
+cls
+reg.exe add "HKLM\System\CurrentControlSet\Services\atapi\Controller0" /f /v EnumDevice1 /t REG_DWORD /d 0x00000001
+pause
+goto menu
+
+:net
+cls
+echo Insira a midia de instalacao do Windows da mesma arquitetura que o Windows (x64 ou x86).
+echo
+echo Verifique em que unidade a midia de instalacao do Windows se encontra
+pause
+echo
+set /p letra=Digite a letra da unidade:
+DISM /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:%letra%:\sources\sxs
+echo Tudo certo se nenhum erro acima.
+echo
+echo Caso tenha tido algum erro, verifique se a letra da unidade esta correta, 
+echo ou se a midia de instacao do Windows noa esta corrompida.
+pause
+goto menu
+
+:exit
+exit
