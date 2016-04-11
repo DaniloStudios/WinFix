@@ -1,20 +1,29 @@
 @echo off
 title WinFix 1.1 - Danilo Studios
 
-rem #include
-rem /*
-rem * Ao utilizar este programa, voce concorda com os termos abaixo (English).
+rem * The MIT License (MIT)
 rem *
-rem * I am not responsible for bricked devices, dead SD cards,
-rem * thermonuclear war, or you getting fired because the alarms+clock app failed. Please
-rem * do some research if you have any concerns about features included in this program
-rem * before use it! YOU are choosing to make these modifications, and if
-rem * you point the finger at me for messing up your device, I will laugh at you.
-rem * Copyright 2016,Danilo Studios
-rem * 2016, Danilo Quintanilha, All Rights Reserved
-rem * Agradecimentos especiais: 
-rem *  -->TechNet [https://technet.microsoft.com/en-us/library/hh824869.aspx]
-rem *  -->Babbo [http://forum.baboo.com.br/index.php?/topic/137759-comandos-do-cmd-prompt-de-comando/]
+rem * Copyright (c) 2016 Danilo Quintanilha
+rem * 
+rem * Permission is hereby granted, free of charge, to any person obtaining a copy of
+rem * this software and associated documentation files (the "Software"), to deal in
+rem * the Software without restriction, including without limitation the rights to
+rem * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+rem * the Software, and to permit persons to whom the Software is furnished to do so,
+rem * subject to the following conditions:
+rem * 
+rem * The above copyright notice and this permission notice shall be included in all
+rem * copies or substantial portions of the Software.
+rem * 
+rem * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+rem * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+rem * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+rem * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+rem * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+rem * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+rem * 
+rem * Codigo fonte:
+rem *  -->GitHub [https://github.com/DaniloStudios/WinFix]
 
 color 0A
 goto admin
@@ -46,6 +55,7 @@ echo 7: Limpeza de disco
 echo 8: Particionador de disco
 echo 9: Fixar o leitor de DVD
 echo 10: Instalar o .NET 3.5
+echo 11: Arrumar o horário do Windows
 echo x: Sair
 
 set /p se=Selecione a acao: 
@@ -59,6 +69,7 @@ if %se%==7 (goto limpa)
 if %se%==8 (goto part)
 if %se%==9 (goto dvd)
 if %se%==10 (goto net)
+if %se%==11 (goto hora)
 if %se%==x (goto sai)
 
 :hd1
@@ -124,6 +135,11 @@ echo Tudo certo se nenhum erro acima.
 echo
 echo Caso tenha tido algum erro, verifique se a letra da unidade esta correta, 
 echo ou se a midia de instacao do Windows noa esta corrompida.
+pause
+goto menu
+
+:hora
+time
 pause
 goto menu
 
